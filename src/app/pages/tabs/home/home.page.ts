@@ -4,12 +4,12 @@ import { NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SearchLocationComponent } from 'src/app/components/search-location/search-location.component';
 import { Address } from 'src/app/models/address.model';
-import { Restaurant } from 'src/app/models/restaurant.model';
 import { AddressService } from 'src/app/services/address/address.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { GoogleMapsService } from 'src/app/services/google-maps/google-maps.service';
 import { LocationService } from 'src/app/services/location/location.service';
+import { Shop } from 'src/app/models/shop.model';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ import { LocationService } from 'src/app/services/location/location.service';
 export class HomePage implements OnInit, OnDestroy {
 
   banners: Banner[] = [];
-  restaurants: Restaurant[] = [];
+  shops: Shop[] = [];
   isLoading: boolean = false;
   location = {} as Address;
   addressSub: Subscription;
@@ -54,7 +54,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.isLoading = true;
     this.getBanners();
     if(!this.location?.lat) {
-      this.getNearbyRestaurants();
+      this.getNearbyShops();
     }   
   }
 
@@ -71,8 +71,8 @@ export class HomePage implements OnInit, OnDestroy {
   async nearbyApiCall() {
     try {
       console.log(this.location);
-      this.restaurants = await this.api.getNearbyRestaurants(this.location.lat, this.location.lng);
-      console.log(this.restaurants);
+      this.shops = await this.api.getNearbyShops(this.location.lat, this.location.lng);
+      console.log(this.shops);
       this.isLoading = false;
     } catch(e) {
       // set isLoading to false
@@ -81,36 +81,36 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  async getNearbyRestaurants() {
-    try {
-      const position = await this.locationService.getCurrentLocation();
-      console.log('get nearby restaurants', position);
-      const { latitude, longitude } = position.coords;
-      const address = await this.mapService.getAddress(latitude, longitude);
-      if(address) {
-        this.location = new Address(
-          '',
-          address.address_components[0].short_name,
-          address.formatted_address,
-          '',
-          '',
-          latitude,
-          longitude
-        );
-        await this.getData();
-      }
-      console.log('restaurants: ', this.restaurants);
-      this.isLoading = false;
-    } catch(e) {
-      console.log(e);
-      this.isLoading = false;
-      this.searchLocation('home', 'home-modal');
-    }
+  async getNearbyShops() {
+    // try {
+    //   const position = await this.locationService.getCurrentLocation();
+    //   console.log('get nearby shops', position);
+    //   const { latitude, longitude } = position.coords;
+    //   const address = await this.mapService.getAddress(latitude, longitude);
+    //   if(address) {
+    //     this.location = new Address(
+    //       '',
+    //       address.address_components[0].short_name,
+    //       address.formatted_address,
+    //       '',
+    //       '',
+    //       latitude,
+    //       longitude
+    //     );
+    //     await this.getData();
+    //   }
+    //   console.log('shops: ', this.shops);
+    //   this.isLoading = false;
+    // } catch(e) {
+    //   console.log(e);
+    //   this.isLoading = false;
+    //   this.searchLocation('home', 'home-modal');
+    // }
   }
 
   async getData() {
     try {
-      this.restaurants = [];
+      this.shops = [];
       await this.addressService.checkExistAddress(this.location);
     } catch(e) {
       console.log(e);

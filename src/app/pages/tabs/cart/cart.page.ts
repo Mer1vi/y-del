@@ -50,7 +50,7 @@ export class CartPage implements OnInit, OnDestroy {
         console.log(result);
         if(result) {
           this.global.errorToast(
-            'Your location is too far from the restaurant in the cart, kindly search from some other restaurant nearby.',
+            'Your location is too far from the shop in the cart, kindly search from some other shop nearby.',
             5000);
           this.cartService.clearCart();
         }
@@ -132,9 +132,9 @@ export class CartPage implements OnInit, OnDestroy {
     try {
       console.log('model: ', this.model);
       const data = {
-        restaurant_id: this.model.restaurant.uid,
+        shop_id: this.model.shop.uid,
         instruction: this.instruction ? this.instruction : '',
-        restaurant: this.model.restaurant,
+        shop: this.model.shop,
         order: this.model.items, //JSON.stringify(this.model.items)
         time: moment().format('lll'),
         address: this.location,

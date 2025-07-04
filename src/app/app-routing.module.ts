@@ -9,7 +9,7 @@ const routes: Routes = [
   // },
   {
     path: '',
-    redirectTo: 'tabs',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -25,11 +25,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule),
+    path: 'commercant',
+    loadChildren: () => import('./pages/commercant/commercant.module').then( m => m.CommercantPageModule),
     canLoad: [AuthGuard],
     data: {
-      type: 'admin'
+      type: 'commercant'
     }
   },
 ];

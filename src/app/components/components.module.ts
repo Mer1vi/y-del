@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RestaurantComponent } from './restaurant/restaurant.component';
-import { IonicModule } from '@ionic/angular';
-import { LoadingRestaurantComponent } from './loading-restaurant/loading-restaurant.component';
+import { ShopComponent } from './shop/shop.component';
+import { LoadingShopComponent } from './loading-shop/loading-shop.component';
 import { EmptyScreenComponent } from './empty-screen/empty-screen.component';
 import { SearchLocationComponent } from './search-location/search-location.component';
+import { IonicModule } from '@ionic/angular';
 
 
 
 @NgModule({
   declarations: [
-    RestaurantComponent,
-    LoadingRestaurantComponent,
+    ShopComponent,
+    LoadingShopComponent,
     EmptyScreenComponent,
     SearchLocationComponent
   ],
@@ -20,8 +20,8 @@ import { SearchLocationComponent } from './search-location/search-location.compo
     IonicModule
   ],
   exports: [
-    RestaurantComponent,
-    LoadingRestaurantComponent,
+    ShopComponent,
+    LoadingShopComponent,
     EmptyScreenComponent,
     SearchLocationComponent
   ],

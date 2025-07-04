@@ -21,10 +21,10 @@ export class AuthGuard implements CanLoad {
       try {
         const type = await this.authService.checkUserAuth();
         if(type) {
-          if(type == roleType) return true;
+         if (type === roleType || type === 'commercant') return true;
           else {
             let url = Strings.TABS; //'/tabs'
-            if(type == 'admin') url = Strings.ADMIN; //'/admin'
+            if(type == 'commercant') url = Strings.COMMERCANT; //'/admin'
             this.navigate(url);
             return false;
           }
@@ -71,7 +71,7 @@ export class AuthGuard implements CanLoad {
           text: 'Retry',
           handler: () => {
             let url = Strings.TABS;
-            if(role == 'admin') url = Strings.ADMIN;
+            if(role == 'commercant') url = Strings.COMMERCANT;
             this.navigate(url);
           }
         }

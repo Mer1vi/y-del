@@ -5,7 +5,7 @@
     [slidesPerView]="1.2"
     [spaceBetween]="20"
     [pagination]="{clickable: true, dynamicBullets: true}">
-    <swiper-slide *ngFor="let image of bannerImages" (click)="goToRestaurant(image)">
+    <swiper-slide *ngFor="let image of bannerImages" (click)="goToShop(image)">
       <img [src]="image?.banner" />
     </swiper-slide>
   </swiper-container>

@@ -3,13 +3,13 @@ import { Address } from 'src/app/models/address.model';
 import { Category } from 'src/app/models/category.model';
 import { Item } from 'src/app/models/item.model';
 import { Order } from 'src/app/models/order.model';
-import { Restaurant } from 'src/app/models/restaurant.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs/operators';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import * as geofirestore from 'geofirestore';
 import { Banner } from 'src/app/models/banner.model';
+import { Shop } from 'src/app/models/shop.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +20,9 @@ export class ApiService {
   firestore = firebase.firestore();
   GeoFirestore = geofirestore.initializeApp(this.firestore);
 
-  restaurants: Restaurant[] = [];
-  allRestaurants: Restaurant[] = [];
-  restaurants1: Restaurant[] = [];  
+  Shops: Shop[] = [];
+  allShops: Shop[] = [];
+  shop1: Shop[] = [];  
   categories: Category[] = [];
   allItems: Item[] = [];
   addresses: Address[] = [];
@@ -56,7 +56,7 @@ export class ApiService {
         data.status
       );
       let banner = Object.assign({}, bannerData);
-      delete banner.res_id;
+      delete banner.sho_id;
       await this.collection('banners').doc(id).set(banner);
       return true;
     } catch(e) {
@@ -106,53 +106,53 @@ export class ApiService {
   }
 
   //  restaurant apis
-  async addRestaurant(data: any, uid) {
+  async addShop(data: any, uid) {
     try {
-      let restaurant = Object.assign({}, data);
-      delete restaurant.g;
-      delete restaurant.distance;
-      console.log(restaurant);
-      const response = await this.geoCollection('restaurants').doc(uid).set(restaurant);
+      let shop = Object.assign({}, data);
+      delete shop.g;
+      delete shop.distance;
+      console.log(shop);
+      const response = await this.geoCollection('shops').doc(uid).set(shop);
       return response;
     } catch(e) {
       throw(e);
     }
   }
 
-  async getRestaurants() {
+  async getShops() {
     try {
-      const restaurants = await this.collection('restaurants').get().pipe(
+      const shops = await this.collection('shops').get().pipe(
         switchMap(async(data: any) => {
-          let restaurantData = await data.docs.map(element => {
+          let shopData = await data.docs.map(element => {
             const item = element.data();
             return item;
           });
-          console.log(restaurantData);
-          return restaurantData;
+          console.log(shopData);
+          return shopData;
         })
       ).toPromise();
-      console.log(restaurants);
-      return restaurants;
+      console.log(shops);
+      return shops;
     } catch(e) {
       throw(e);
     }
   }
 
-  async getRestaurantById(id): Promise<any> {
+  async getShopById(id): Promise<any> {
     try {
-      const restaurant = (await (this.collection('restaurants').doc(id).get().toPromise())).data();
-      console.log(restaurant);
-      return restaurant;
+      const shop = (await (this.collection('shops').doc(id).get().toPromise())).data();
+      console.log(shop);
+      return shop;
     } catch(e) {
       throw(e);
     }
   }
 
-  async getNearbyRestaurants(lat, lng): Promise<any> {
+  async getNearbyShops(lat, lng): Promise<any> {
     try {
       const center = new firebase.firestore.GeoPoint(lat, lng);
       const radius = this.radius;
-      const data = await (await this.geoCollection('restaurants').near({ center, radius: this.radius })
+      const data = await (await this.geoCollection('shops').near({ center, radius: this.radius })
       .get()).docs.sort((a, b) => a.distance - b.distance).map(element => {
         let item: any = element.data();
         item.id = element.id;
@@ -166,7 +166,7 @@ export class ApiService {
   }
 
   // categories
-  async getRestaurantCategories(uid) {
+  async getShopCategories(uid) {
     try {
       const categories = await this.collection(
         'categories',
@@ -206,12 +206,12 @@ export class ApiService {
   }
 
   // menu
-  async addMenuItem(data) {
+  async addArticleItem(data) {
     try {
       const id = this.randomString();
       const item = new Item(
         id,
-        data.restaurant_id,
+        data.shop_id,
         this.firestore.collection('categories').doc(data.category_id),
         data.cover,
         data.name,
@@ -225,16 +225,16 @@ export class ApiService {
       let itemData = Object.assign({}, item);
       delete itemData.quantity;
       console.log(itemData);
-      const result = await this.collection('menu').doc(data.restaurant_id).collection('allItems').doc(id).set(itemData);
+      const result = await this.collection('article').doc(data.restaurant_id).collection('allItems').doc(id).set(itemData);
       return true;
     } catch(e) {
       throw(e);
     }
   }
 
-  async getRestaurantMenu(uid) {
+  async getShopArticle(uid) {
     try {
-      const itemsRef = await this.collection('menu').doc(uid)
+      const itemsRef = await this.collection('article').doc(uid)
           .collection('allItems', ref => ref.where('status', '==', true));
       const items = itemsRef.get().pipe(
         switchMap(async(data: any) => {

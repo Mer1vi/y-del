@@ -32,7 +32,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'restaurants/:restaurantId',
+    path: 'shops/:shopId',
     loadChildren: () => import('./items/items.module').then( m => m.ItemsPageModule)
   },
   {

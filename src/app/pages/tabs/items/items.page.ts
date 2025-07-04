@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 // import { take } from 'rxjs/operators';
-import { Restaurant } from 'src/app/models/restaurant.model';
 import { Category } from 'src/app/models/category.model';
 import { Item } from 'src/app/models/item.model';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { Cart } from 'src/app/interfaces/cart.interface';
+import { Shop } from 'src/app/models/shop.model';
 // import { Cart } from 'src/app/models/cart.model';
 
 @Component({
@@ -20,7 +20,7 @@ import { Cart } from 'src/app/interfaces/cart.interface';
 export class ItemsPage implements OnInit, OnDestroy {
 
   id: any;
-  data = {} as Restaurant;
+  data = {} as Shop;
   items: Item[] = [];
   veg: boolean = false;
   isLoading: boolean;
@@ -44,7 +44,7 @@ export class ItemsPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {    
-    const id = this.route.snapshot.paramMap.get('restaurantId');
+    const id = this.route.snapshot.paramMap.get('shopId');
     console.log('check id: ', id);
     if(!id) {
       this.navCtrl.back();
@@ -69,7 +69,7 @@ export class ItemsPage implements OnInit, OnDestroy {
         this.storedData = cart;
         this.cartData.totalItem = this.storedData.totalItem;
         this.cartData.totalPrice = this.storedData.totalPrice;
-        if(cart?.restaurant?.uid === this.id) {
+        if(cart?.shop?.uid === this.id) {
           this.allItems.forEach(element => {
             let qty = false;
             cart.items.forEach(element2 => {
@@ -108,15 +108,15 @@ export class ItemsPage implements OnInit, OnDestroy {
   async getItems() {
     try {      
       this.isLoading = true;
-      this.data = {} as Restaurant;
+      this.data = {} as Shop;
       this.cartData = {} as Cart;
       this.storedData = {} as Cart;
-      this.data = await this.api.getRestaurantById(this.id);
-      this.categories = await this.api.getRestaurantCategories(this.id);
-      this.allItems = await this.api.getRestaurantMenu(this.id);
+      this.data = await this.api.getShopById(this.id);
+      this.categories = await this.api.getShopCategories(this.id);
+      this.allItems = await this.api.getShopArticle(this.id);
       this.items = [...this.allItems];
       console.log('items: ', this.items);
-      console.log('restaurant: ', this.data);
+      console.log('shop: ', this.data);
       await this.cartService.getCartData();
       this.isLoading = false;
       // this.allItems.forEach((element, index) => {
@@ -141,7 +141,7 @@ export class ItemsPage implements OnInit, OnDestroy {
     const index = this.allItems.findIndex(x => x.id === item.id);
     console.log(index);
     if(!this.allItems[index].quantity || this.allItems[index].quantity == 0) {
-      if(!this.storedData.restaurant || (this.storedData.restaurant && this.storedData.restaurant.uid == this.id)) {
+      if(!this.storedData.shop || (this.storedData.shop && this.storedData.shop.uid == this.id)) {
         console.log('index item: ', this.allItems);
         this.cartService.quantityPlus(index, this.allItems, this.data);
       } else {
@@ -160,8 +160,8 @@ export class ItemsPage implements OnInit, OnDestroy {
 
   saveToCart() {
     try {
-      this.cartData.restaurant = {} as Restaurant;
-      this.cartData.restaurant = this.data;
+      this.cartData.shop = {} as Shop;
+      this.cartData.shop = this.data;
       console.log('save cartData: ', this.cartData);
       this.cartService.saveCart();
     } catch(e) {

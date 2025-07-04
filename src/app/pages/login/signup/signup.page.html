@@ -56,8 +56,8 @@
             #phone="ngModel"
             placeholder="Phone"
             required
-            minlength="10"
-            maxlength="10">
+            minlength="9"
+            maxlength="9">
           </ion-input>
         </ion-item>
         <ion-text color="danger" *ngIf="!phone.valid && phone.touched">
@@ -82,7 +82,7 @@
           <p class="errorMsg">* Password must be of minimum 8 characters long.</p>
         </ion-text>
       </div>
-
+      <div class="ion-margin-bottom">
       <ion-item color="light">
         <ion-icon name="key" slot="start" color="primary"></ion-icon> 
         <ion-input
@@ -101,6 +101,26 @@
       <ion-text color="danger" *ngIf="c_passwordCtrl.valid && c_passwordCtrl.value != passwordCtrl.value">
         <p class="errorMsg">* Password Mismatch! You have entered a different password.</p>
       </ion-text>
+      </div>
+      
+      <div class="ion-margin-bottom">
+  <ion-item color="light">
+    <ion-icon name="people" slot="start" color="primary"></ion-icon>
+    <ion-select
+      placeholder="Choisissez votre rôle"
+      name="type"
+      ngModel
+      #typeCtrl="ngModel"
+      required>
+      <ion-select-option value="user">Client</ion-select-option>
+      <ion-select-option value="commercant">Commerçant</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-text color="danger" *ngIf="!typeCtrl.valid && typeCtrl.touched">
+    <p class="errorMsg">* Veuillez choisir un rôle</p>
+  </ion-text>
+</div>
+
     </ion-list>
 
     <ion-button 

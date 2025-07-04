@@ -30,7 +30,7 @@ export class SignupPage implements OnInit {
   register(form: NgForm) {
     this.isLoading = true;
     console.log(form.value);
-    this.authService.register(form.value).then((data: any) => {
+    this.authService.register(form.value,form.value.type).then((data: any) => {
       console.log(data);
       this.navigate(data.type);
       this.isLoading = false;
@@ -49,7 +49,7 @@ export class SignupPage implements OnInit {
 
   navigate(type?) {    
     let url = Strings.TABS;
-    if(type == 'admin') url = Strings.ADMIN;
+    if(type == 'commercant') url = Strings.COMMERCANT;
     this.router.navigateByUrl(url);
   }
 

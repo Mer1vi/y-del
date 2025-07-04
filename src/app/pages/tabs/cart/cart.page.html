@@ -9,17 +9,17 @@
 
 <ion-content>
 
-  <app-empty-screen *ngIf="!model?.restaurant"></app-empty-screen>
+  <app-empty-screen *ngIf="!model?.shop"></app-empty-screen>
 
-  <ng-container *ngIf="model?.restaurant">
+  <ng-container *ngIf="model?.shop">
     <ion-list lines="none" class="borderBottomSmall">
       <ion-item>
         <ion-thumbnail slot="start">
-          <ion-img [src]="model?.restaurant?.cover ? model.restaurant.cover : 'assets/imgs/1.jpg'"></ion-img>
+          <ion-img [src]="model?.shop?.cover ? model.shop.cover : 'assets/imgs/1.jpg'"></ion-img>
         </ion-thumbnail>
         <ion-label>
-          <ion-text><h4>{{model?.restaurant?.name}}</h4></ion-text>
-          <ion-note>{{model?.restaurant?.address}}</ion-note>
+          <ion-text><h4>{{model?.shop?.name}}</h4></ion-text>
+          <ion-note>{{model?.shop?.address}}</ion-note>
         </ion-label>
       </ion-item>
       <app-cart-item 
@@ -42,22 +42,22 @@
       </ion-list-header>
       <ion-item lines="none">
         <ion-label color="dark">Item Total</ion-label>
-        <ion-text slot="end" color="dark">₹{{model?.totalPrice | number: '0.2-2'}}</ion-text>
+        <ion-text slot="end" color="dark">FCFA{{model?.totalPrice | number: '0.2-2'}}</ion-text>
       </ion-item>
       <ion-item lines="full">
         <ion-label color="dark">Delivery fee</ion-label>
-        <ion-text slot="end" color="dark">₹{{model?.deliveryCharge | number: '0.2-2'}}</ion-text>
+        <ion-text slot="end" color="dark">FCFA{{model?.deliveryCharge | number: '0.2-2'}}</ion-text>
       </ion-item>
       <ion-item lines="none">
         <ion-label color="dark">To Pay</ion-label>
-        <ion-text slot="end" color="dark"><h5>₹{{model?.grandTotal | number: '0.2-2'}}</h5></ion-text>
+        <ion-text slot="end" color="dark"><h5>FCFA{{model?.grandTotal | number: '0.2-2'}}</h5></ion-text>
       </ion-item>
     </ion-list>
   </ng-container>
 
 </ion-content>
 
-<ion-footer *ngIf="model?.restaurant">
+<ion-footer *ngIf="model?.shop">
   <ion-toolbar>
     <ion-row *ngIf="!location?.lat">
       <ion-col size="6">
@@ -97,7 +97,7 @@
       <ion-col size="6" class="ion-no-padding" (click)="scrollToBottom()">
         <ion-item lines="none" color="light" class="ion-no-padding">
           <ion-label>
-            <h6>₹{{model?.grandTotal | number: '0.2-2'}}</h6>
+            <h6>FCFA{{model?.grandTotal | number: '0.2-2'}}</h6>
             <ion-text color="secondary">
               VIEW DETAILED BILL
               <ion-icon name="chevron-down-outline"></ion-icon>

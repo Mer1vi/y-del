@@ -110,6 +110,9 @@ export class EditAddressPage implements OnInit {
       this.toggleSubmit();
       console.log(this.form);
       if(!this.form.valid || !this.isLocationFetched) {
+        console.log('isLocationFetched:', this.isLocationFetched);
+        console.log('location:', this.location);
+
         this.toggleSubmit();
         return;
       }
@@ -117,6 +120,9 @@ export class EditAddressPage implements OnInit {
         title: this.form.value.title,
         landmark: this.form.value.landmark,
         house: this.form.value.house,
+        // address: this.location.address?? '',
+        // lat: this.location?.lat?? null,
+        // lng: this.location?.lng?? null,
         address: this.location.address,
         lat: this.location.lat,
         lng: this.location.lng,
@@ -130,6 +136,7 @@ export class EditAddressPage implements OnInit {
     } catch(e) {
       console.log(e);
       this.isSubmitted = false;
+      this.isLoading = false;
       this.global.errorToast();
     }
 

@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
 
   navigate(data?) {    
     let url = Strings.TABS;
-    if(data == 'admin') url = Strings.ADMIN;
+    if(data == 'commercant') url = Strings.COMMERCANT;
     this.router.navigateByUrl(url);
   }
 

@@ -9,7 +9,7 @@ import { ItemsPageRoutingModule } from './items-routing.module';
 import { ItemsPage } from './items.page';
 import { ItemComponent } from 'src/app/components/item/item.component';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { RestaurantDetailComponent } from 'src/app/components/restaurant-detail/restaurant-detail.component';
+import { ShopDetailComponent } from 'src/app/components/shop-detail/shop-detail.component';
 
 @NgModule({
   imports: [
@@ -19,6 +19,6 @@ import { RestaurantDetailComponent } from 'src/app/components/restaurant-detail/
     ItemsPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [ItemsPage, ItemComponent, RestaurantDetailComponent]
+  declarations: [ItemsPage, ItemComponent, ShopDetailComponent]
 })
 export class ItemsPageModule {}

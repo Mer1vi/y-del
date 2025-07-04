@@ -10,20 +10,20 @@
 
 <ion-content>
 
-  <app-loading-restaurant *ngIf="isLoading"></app-loading-restaurant>
+  <app-loading-shop *ngIf="isLoading"></app-loading-shop>
 
-  <app-empty-screen *ngIf="!isLoading && (restaurants?.length == 0 || query?.length == 0)" [model]="model"></app-empty-screen>
+  <app-empty-screen *ngIf="!isLoading && (shops?.length == 0 || query?.length == 0)" [model]="model"></app-empty-screen>
 
-  <ion-list *ngIf="!isLoading && restaurants.length > 0">
+  <ion-list *ngIf="!isLoading && shops.length > 0">
     <ion-list-header>
       <ion-label>
         <h4>Search results for "{{query}}"</h4>
       </ion-label>
     </ion-list-header>
-    <app-restaurant 
-      *ngFor="let restaurant of restaurants"
-      [restaurant]="restaurant"
-      [routerLink]="['/', 'tabs', 'restaurants', restaurant.uid]"></app-restaurant>
+    <app-shop
+      *ngFor="let shop of shops"
+      [shop]="shop"
+      [routerLink]="['/', 'tabs', 'shops', shop.uid]"></app-shop>
   </ion-list>
 
 </ion-content>

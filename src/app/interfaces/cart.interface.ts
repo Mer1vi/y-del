@@ -1,9 +1,9 @@
 import { Address } from "../models/address.model";
 import { Item } from "../models/item.model";
-import { Restaurant } from "../models/restaurant.model";
+import { Shop } from "../models/shop.model";
 
 export interface Cart {
-    restaurant: Restaurant;
+    shop:Shop;
     items: Item[];
     totalItem?: number;
     totalPrice?: number;

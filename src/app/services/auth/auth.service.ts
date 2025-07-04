@@ -63,9 +63,9 @@ export class AuthService {
     this._uid.next(new AuthUserId(uid));
   }
 
-  async register(formValue, type?) {
+  async register(formValue, type) {
     try {
-      const registeredUser = await this.fireAuth.createUserWithEmailAndPassword(formValue.email, formValue.password);
+      const registeredUser = await this.fireAuth.createUserWithEmailAndPassword(formValue.email, formValue.password,);
       console.log('registered user: ', registeredUser);
       const data = new User(
         formValue.email,
@@ -76,7 +76,7 @@ export class AuthService {
         'active'
       );
       await this.apiService.collection('users').doc(registeredUser.user.uid).set(Object.assign({}, data));
-      if(!type || type != 'restaurant') {
+      if(!type || type != 'shop') {
         await this.setUserData(registeredUser.user.uid);
       }
       const userData = {
