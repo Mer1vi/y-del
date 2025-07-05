@@ -18,7 +18,7 @@ import { Shop } from 'src/app/models/shop.model';
 export class AddShopPage implements OnInit {
 
   isLoading: boolean = false;
-  coverImage: any;
+  coverImage: any = '../../../../assets/imgs/upload.webp';
   cities: any[] = [];
   location: any = {};
   category: string;
@@ -92,11 +92,8 @@ export class AddShopPage implements OnInit {
     const mimeType = files[0].type;
     if(mimeType.match(/image\/*/) == null) return;
     const file = files[0];
-     const reader = new FileReader();
-  reader.onload = () => {
-    this.coverImage = reader.result;  // preview locale
-  };
-  reader.readAsDataURL(file);
+              console.log('url image', files)
+
     const filePath = 'shops/' + Date.now() + '_' + file.name;
     const fileRef = this.afStorage.ref(filePath);
     const task = this.afStorage.upload(filePath, file);
@@ -105,6 +102,7 @@ export class AddShopPage implements OnInit {
       finalize(() => {
         const downloadUrl = fileRef.getDownloadURL();
         downloadUrl.subscribe(url => {
+          console.log('url image', url)
           console.log('url: ', url);
           if(url) {
             this.coverImage = url;
